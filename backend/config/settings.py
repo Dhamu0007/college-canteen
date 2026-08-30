@@ -159,10 +159,12 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:3000",
+    origin.strip()
+    for origin in os.getenv(
+        'CORS_ALLOWED_ORIGINS',
+        'http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000'
+    ).split(',')
+    if origin.strip()
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -186,6 +188,15 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        'CSRF_TRUSTED_ORIGINS',
+        ''
+    ).split(',')
+    if origin.strip()
 ]
 
 # REST Framework settings
