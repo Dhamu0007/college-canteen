@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-[#faf7f2] text-earth-800 font-body antialiased selection:bg-mustard-500 selection:text-earth-900 overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.06) 0px, transparent 50%);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+/* Custom Keyframe Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes emojiBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-7px) scale(1.1); }
+}
+
+@keyframes emojiFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(4deg); }
+}
+
+@keyframes emojiWiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-10deg) scale(1.08); }
+  75% { transform: rotate(10deg) scale(1.08); }
+}
+
+@keyframes emojiPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15) rotate(-2deg); }
+}
+
+@keyframes emojiSpinBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-6px) rotate(15deg) scale(1.12); }
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+}
+
+.animate-emoji-bounce {
+  animation: emojiBounce 2.4s ease-in-out infinite;
+}
+
+.animate-emoji-float {
+  animation: emojiFloat 3s ease-in-out infinite;
+}
+
+.animate-emoji-wiggle {
+  animation: emojiWiggle 2.2s ease-in-out infinite;
+}
+
+.animate-emoji-pulse {
+  animation: emojiPulse 2.6s ease-in-out infinite;
+}
+
+.animate-emoji-spin-bounce {
+  animation: emojiSpinBounce 2.8s ease-in-out infinite;
+}
+
+.animate-particle-float {
+  animation: particleFloat 2.5s ease-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes specularSheen {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes borderLightRun {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+@layer components {
+  /* Master Liquid Glass Container & Cards - Hardware Accelerated */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    transform: translateZ(0);
+    box-shadow: 
+      0 12px 30px -10px rgba(0, 0, 0, 0.04),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.02);
+  }
+
+  .glass-card-dark {
+    background: rgba(18, 24, 38, 0.85);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transform: translateZ(0);
+    box-shadow: 
+      0 20px 40px -15px rgba(0, 0, 0, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:border-mustard-400/60;
+  }
+
+  .glass-card-liquid {
+    @apply relative overflow-hidden rounded-3xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.72) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transform: translateZ(0);
+    box-shadow: 
+      0 12px 30px -10px rgba(217, 119, 6, 0.06),
+      inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  }
+
+  .glass-card-liquid:hover {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 20px 40px -10px rgba(245, 158, 11, 0.18),
+      inset 0 1px 3px rgba(255, 255, 255, 1);
+  }
+  
+  .card-traditional {
+    @apply bg-white/85 backdrop-blur-md rounded-3xl shadow-md border border-white/80 hover:border-mustard-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    transform: translateZ(0);
+  }
+
+  /* Animated Liquid Dashboard Stat Cards */
+  .dash-stat-card {
+    @apply relative overflow-hidden rounded-3xl p-6 bg-white/80 backdrop-blur-xl border border-white/80 transition-all duration-300;
+    box-shadow: 
+      0 10px 30px -10px rgba(0, 0, 0, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  }
+
+  .dash-stat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 
+      0 25px 50px -12px rgba(234, 179, 8, 0.22),
+      inset 0 1px 2px rgba(255, 255, 255, 1);
+  }
+
+  .dash-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transition: left 0.7s ease;
+  }
+
+  .dash-stat-card:hover::before {
+    left: 100%;
+  }
+
+  /* Vibrant Liquid Glass Buttons */
+  .btn-primary, .btn-glass-primary {
+    @apply relative overflow-hidden bg-gradient-to-r from-amber-500 via-mustard-500 to-yellow-500 hover:from-amber-600 hover:to-mustard-600 text-earth-900 font-extrabold px-6 py-3.5 rounded-2xl transition-all duration-300 transform hover:scale-[1.03] hover:shadow-xl hover:shadow-amber-500/30 active:scale-[0.98] flex items-center justify-center gap-2 border border-white/40;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-primary::before, .btn-glass-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .btn-primary:hover::before, .btn-glass-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-secondary, .btn-glass-secondary {
+    @apply relative overflow-hidden bg-earth-900/90 hover:bg-earth-900 text-white font-bold px-6 py-3.5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-earth-900/30 active:scale-95 flex items-center justify-center gap-2 backdrop-blur-md border border-white/10;
+  }
+
+  .btn-outline, .btn-glass-outline {
+    @apply border-2 border-earth-200/80 hover:border-mustard-500 text-earth-800 hover:text-earth-900 font-bold px-6 py-3.5 rounded-2xl transition-all duration-300 hover:bg-white/60 backdrop-blur-md flex items-center justify-center gap-2 shadow-sm hover:shadow-md;
+  }
+
+  /* Liquid Glass Input Fields */
+  .input-traditional, .input-glass {
+    @apply w-full px-4 py-3.5 rounded-2xl border-2 border-white/80 bg-white/70 backdrop-blur-md focus:bg-white/90 focus:border-mustard-500 focus:ring-4 focus:ring-mustard-400/20 focus:outline-none transition-all duration-300 font-medium text-earth-900 placeholder:text-earth-400 shadow-sm;
+  }
+
+  /* Animated Liquid Gradient Text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-emerald {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-fire {
+    background: linear-gradient(135deg, #f43f5e 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Live Pulse Indicator */
+  .live-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #22C55E;
+    animation: pulseDot 2s infinite ease-in-out;
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s infinite;
+  }
+
+  /* Liquid Floating Glass Badge */
+  .glass-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-white/70 backdrop-blur-md border border-white/80 shadow-sm text-earth-800;
+  }
+}
+
+@layer utilities {
+  .animate-float-slow {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .shadow-neon-mustard {
+    box-shadow: 0 12px 35px -5px rgba(234, 179, 8, 0.4);
+  }
+
+  .shadow-neon-green {
+    box-shadow: 0 12px 35px -5px rgba(34, 197, 94, 0.4);
+  }
+
+  .shadow-neon-blue {
+    box-shadow: 0 12px 35px -5px rgba(59, 130, 246, 0.4);
+  }
+
+  .shadow-neon-purple {
+    box-shadow: 0 12px 35px -5px rgba(168, 85, 247, 0.4);
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(243, 239, 233, 0.6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(226, 183, 20, 0.8);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(202, 138, 4, 1);
+}
