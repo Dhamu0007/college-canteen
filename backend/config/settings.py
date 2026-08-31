@@ -162,7 +162,7 @@ CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
         'CORS_ALLOWED_ORIGINS',
-        'http://localhost:5173,http://localhost:3000'
+        'http://localhost:5173'
     ).split(',')
     if origin.strip()
 ]
@@ -198,6 +198,10 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(',')
     if origin.strip()
 ]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 
 # REST Framework settings
 REST_FRAMEWORK = {
