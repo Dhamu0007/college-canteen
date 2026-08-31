@@ -62,7 +62,7 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT
 )
 
-# Serve static files only during development
+# Serve static files in development
 if settings.DEBUG:
     urlpatterns += static(
         settings.STATIC_URL,
