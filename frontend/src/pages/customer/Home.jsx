@@ -37,6 +37,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { useCart } from '../../hooks/useCart'
 import { useSound } from '../../hooks/useSound'
 import { useTheme } from '../../hooks/useTheme'
+import { getImageUrl } from '../../utils/helpers'
 import toast from 'react-hot-toast'
 
 const QUICK_SEARCH_PILLS = [
@@ -446,13 +447,21 @@ const Home = () => {
                       : 'bg-white/90 dark:bg-slate-900/90 border-slate-200 dark:border-slate-800 shadow-xs'
                   }`}
                 >
-                  <div className="mb-1.5">
-                    <CategoryAnimatedEmoji
-                      categoryName={category.name}
-                      icon={category.icon}
-                      size="md"
-                      showParticles={isSelected}
-                    />
+                  <div className="mb-1.5 flex items-center justify-center">
+                    {category.image ? (
+                      <img
+                        src={getImageUrl(category.image)}
+                        alt={category.name}
+                        className="w-10 h-10 rounded-xl object-cover shadow-sm border border-slate-200 dark:border-slate-700"
+                      />
+                    ) : (
+                      <CategoryAnimatedEmoji
+                        categoryName={category.name}
+                        icon={category.icon}
+                        size="md"
+                        showParticles={isSelected}
+                      />
+                    )}
                   </div>
                   <h3 className="font-extrabold text-slate-900 dark:text-white text-xs uppercase tracking-wider line-clamp-1">
                     {category.name}

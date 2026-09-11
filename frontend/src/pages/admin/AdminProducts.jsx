@@ -57,7 +57,9 @@ const AdminProducts = () => {
     icon: '🍛',
     order: 0,
     is_active: true,
+    image: null,
   })
+  const [categoryImagePreview, setCategoryImagePreview] = useState(null)
 
   useEffect(() => {
     fetchData()
@@ -232,7 +234,9 @@ const AdminProducts = () => {
       icon: '🍛',
       order: categories.length,
       is_active: true,
+      image: null,
     })
+    setCategoryImagePreview(null)
     setIsCategoryModalOpen(true)
   }
 
@@ -244,14 +248,38 @@ const AdminProducts = () => {
       icon: category.icon || '🍛',
       order: category.order || 0,
       is_active: category.is_active ?? true,
+      image: null,
     })
+    setCategoryImagePreview(category.image ? getImageUrl(category.image) : null)
     setIsCategoryModalOpen(true)
+  }
+
+  const handleCategoryImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image size must be less than 5MB')
+        return
+      }
+      setCategoryFormData((prev) => ({ ...prev, image: file }))
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setCategoryImagePreview(reader.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleRemoveCategoryImage = () => {
+    setCategoryFormData((prev) => ({ ...prev, image: null }))
+    setCategoryImagePreview(null)
   }
 
   const handleDeleteCategory = async (identifier) => {
     if (!window.confirm('Are you sure you want to delete this category? All associated products may be affected.')) return
     try {
       await productsAPI.deleteCategory(identifier)
+      toast.success('Category deleted successfully')
       fetchData()
     } catch (err) {
       toast.error('Failed to delete category')
@@ -262,11 +290,23 @@ const AdminProducts = () => {
     e.preventDefault()
     setSubmitting(true)
     try {
+      const submitData = new FormData()
+      submitData.append('name', categoryFormData.name)
+      submitData.append('description', categoryFormData.description || '')
+      submitData.append('icon', categoryFormData.icon || '🍛')
+      submitData.append('order', categoryFormData.order || 0)
+      submitData.append('is_active', categoryFormData.is_active)
+      if (categoryFormData.image instanceof File) {
+        submitData.append('image', categoryFormData.image)
+      }
+
       if (editingCategory) {
         const identifier = editingCategory.slug || editingCategory.id
-        await productsAPI.updateCategory(identifier, categoryFormData)
+        await productsAPI.updateCategory(identifier, submitData)
+        toast.success('Category updated successfully! ✨')
       } else {
-        await productsAPI.createCategory(categoryFormData)
+        await productsAPI.createCategory(submitData)
+        toast.success('Category created successfully! ✨')
       }
       setIsCategoryModalOpen(false)
       fetchData()
@@ -484,11 +524,21 @@ const AdminProducts = () => {
                   <div key={cat.id} className="bg-white rounded-2xl p-5 border border-earth-100 shadow-xs space-y-3 relative group hover:border-mustard-300 transition-all">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <CategoryAnimatedEmoji
-                          categoryName={cat.name}
-                          icon={cat.icon}
-                          size="md"
-                        />
+                        {cat.image ? (
+                          <div className="w-12 h-12 rounded-xl overflow-hidden border border-earth-200 shadow-xs relative shrink-0">
+                            <img
+                              src={getImageUrl(cat.image)}
+                              alt={cat.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <CategoryAnimatedEmoji
+                            categoryName={cat.name}
+                            icon={cat.icon}
+                            size="md"
+                          />
+                        )}
                         <div>
                           <h3 className="font-bold text-earth-900 text-lg flex items-center gap-2">
                             {cat.name}
@@ -775,6 +825,40 @@ const AdminProducts = () => {
                     className="w-full px-3 py-2 border border-earth-300 rounded-xl text-sm focus:outline-none focus:border-mustard-500"
                     placeholder="e.g. Starters, Main Course, Biryani"
                   />
+                </div>
+
+                {/* Category Image Upload */}
+                <div>
+                  <label className="block text-xs font-bold uppercase text-earth-600 mb-1">Category Photo / Image</label>
+                  {categoryImagePreview ? (
+                    <div className="relative w-full h-32 rounded-2xl overflow-hidden border-2 border-mustard-400 group shadow-sm bg-earth-50">
+                      <img
+                        src={categoryImagePreview}
+                        alt="Category Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <label className="px-3 py-1.5 bg-white/90 hover:bg-white text-earth-900 text-xs font-bold rounded-xl cursor-pointer shadow-md flex items-center gap-1">
+                          <Upload size={14} /> Change Photo
+                          <input type="file" accept="image/*" onChange={handleCategoryImageChange} className="hidden" />
+                        </label>
+                        <button
+                          type="button"
+                          onClick={handleRemoveCategoryImage}
+                          className="px-3 py-1.5 bg-red-500/90 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center gap-1"
+                        >
+                          <X size={14} /> Remove
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <label className="w-full h-24 border-2 border-dashed border-earth-300 hover:border-mustard-500 rounded-2xl flex flex-col items-center justify-center cursor-pointer bg-earth-50/50 hover:bg-mustard-50/20 transition-all p-3">
+                      <ImageIcon className="w-6 h-6 text-earth-400 mb-1" />
+                      <span className="text-xs font-bold text-earth-700">Click to upload category photo</span>
+                      <span className="text-[10px] text-earth-400">PNG, JPG, WEBP up to 5MB (Optional)</span>
+                      <input type="file" accept="image/*" onChange={handleCategoryImageChange} className="hidden" />
+                    </label>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">

@@ -2,10 +2,12 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import CategoryAnimatedEmoji from './CategoryAnimatedEmoji'
 import { getCategoryMeta } from '../../utils/categoryEmojis'
+import { getImageUrl } from '../../utils/helpers'
 
 const CategoryCard = ({ category, isSelected, onClick }) => {
   const catName = category?.name || ''
   const catIcon = category?.icon || ''
+  const catImage = getImageUrl(category?.image)
   const meta = getCategoryMeta(catName, catIcon)
 
   return (
@@ -22,13 +24,21 @@ const CategoryCard = ({ category, isSelected, onClick }) => {
         }
       `}
     >
-      <CategoryAnimatedEmoji
-        categoryName={catName}
-        icon={catIcon}
-        size="sm"
-        isSelected={isSelected}
-        showParticles={isSelected}
-      />
+      {catImage ? (
+        <img
+          src={catImage}
+          alt={catName}
+          className="w-7 h-7 rounded-lg object-cover shadow-xs border border-white/60"
+        />
+      ) : (
+        <CategoryAnimatedEmoji
+          categoryName={catName}
+          icon={catIcon}
+          size="sm"
+          isSelected={isSelected}
+          showParticles={isSelected}
+        />
+      )}
       <span className="text-sm md:text-base font-extrabold tracking-wide">{category.name}</span>
       {category.count !== undefined && (
         <span
