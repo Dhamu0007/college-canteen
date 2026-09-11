@@ -21,6 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
     additional_images = ProductImageSerializer(many=True, read_only=True)
     final_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     discount_percentage = serializers.IntegerField(read_only=True)
+    description = serializers.CharField(required=False, allow_blank=True, default='')
     image = serializers.ImageField(required=False, allow_null=True)
     
     class Meta:

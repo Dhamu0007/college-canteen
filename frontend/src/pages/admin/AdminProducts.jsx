@@ -208,7 +208,8 @@ const AdminProducts = () => {
 
       const submitData = new FormData()
       submitData.append('name', formData.name)
-      submitData.append('description', formData.description)
+      const finalDescription = formData.description?.trim() || `${formData.name} - freshly prepared hot canteen specialty.`
+      submitData.append('description', finalDescription)
       submitData.append('price', formData.price)
       if (formData.discount_price) {
         submitData.append('discount_price', formData.discount_price)
@@ -1031,13 +1032,16 @@ const AdminProducts = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase text-earth-600 mb-1">Description</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold uppercase text-earth-600">Description</label>
+                    <span className="text-[11px] text-earth-400 font-medium">Optional (auto-filled if blank)</span>
+                  </div>
                   <textarea
                     rows={2}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="w-full px-3 py-2 border border-earth-300 rounded-xl text-sm focus:outline-none focus:border-mustard-500"
-                    placeholder="Short delicious description of the food item..."
+                    placeholder="Short delicious description of the food item (or leave blank to auto-generate)..."
                   />
                 </div>
 
