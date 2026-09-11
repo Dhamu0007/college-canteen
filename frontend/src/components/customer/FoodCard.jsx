@@ -102,18 +102,29 @@ const FoodCard = ({ product, featured = false, onQuickView, viewMode = 'grid' })
         className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-400 dark:hover:border-amber-500/50 transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer group"
       >
         <div className="flex items-center gap-3.5 min-w-0">
-          <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden relative shrink-0 bg-gradient-to-br ${getCategoryGradient(product.category_name, product.food_type)} border border-white/20 dark:border-slate-800 flex items-center justify-center shadow-inner`}>
+          <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden relative shrink-0 bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-800 flex items-center justify-center shadow-inner`}>
             {imageUrl && !imgError ? (
-              <img
-                src={imageUrl}
-                alt={product.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                onError={() => setImgError(true)}
-              />
+              <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                {/* Ambient blur backdrop */}
+                <img
+                  src={imageUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover blur-md scale-125 opacity-40 pointer-events-none"
+                />
+                {/* Foreground thumbnail */}
+                <img
+                  src={imageUrl}
+                  alt={product.name}
+                  className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  onError={() => setImgError(true)}
+                  loading="lazy"
+                />
+              </div>
             ) : (
               <CategoryAnimatedEmoji categoryName={product.category_name} size="md" />
             )}
-            <span className={`absolute bottom-1 left-1 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-xs ${product.food_type === 'veg' ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`}>
+            <span className={`absolute bottom-1 left-1 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-xs z-10 ${product.food_type === 'veg' ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`}>
               {product.food_type === 'veg' ? 'Veg' : 'Non-Veg'}
             </span>
           </div>
@@ -192,18 +203,32 @@ const FoodCard = ({ product, featured = false, onQuickView, viewMode = 'grid' })
         }
       `}
     >
-      {/* Image / Visual Showcase Container */}
+      {/* Image / Visual Showcase Container - Perfect Fit System */}
       <div
-        className="relative overflow-hidden h-48 sm:h-52 cursor-pointer select-none"
+        className="relative overflow-hidden h-48 sm:h-52 cursor-pointer select-none bg-slate-900/5 dark:bg-slate-950/40"
         onClick={() => onQuickView?.(product)}
       >
         {imageUrl && !imgError ? (
-          <img
-            src={imageUrl}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-            onError={() => setImgError(true)}
-          />
+          <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+            {/* Ambient Blurred Backdrop Layer - Eliminates harsh letterboxing or edge cuts */}
+            <img
+              src={imageUrl}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 dark:opacity-45 pointer-events-none"
+            />
+            {/* Cinematic Scrim Gradient to protect contrast and badges */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/35 pointer-events-none z-1" />
+            
+            {/* Primary Dish Image - Perfectly Fitted & Centered */}
+            <img
+              src={imageUrl}
+              alt={product.name}
+              className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+              onError={() => setImgError(true)}
+              loading="lazy"
+            />
+          </div>
         ) : (
           <div className={`w-full h-full bg-gradient-to-br ${getCategoryGradient(product.category_name, product.food_type)} flex flex-col items-center justify-center relative overflow-hidden p-4`}>
             {/* Ambient background glow rings */}

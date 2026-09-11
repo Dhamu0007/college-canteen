@@ -19,14 +19,22 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
       className="flex items-center justify-between p-4 bg-white rounded-2xl border border-earth-100 shadow-sm hover:shadow-md transition-all"
     >
       <div className="flex items-center gap-4">
-        <div className="w-16 h-16 rounded-xl overflow-hidden bg-earth-100 flex items-center justify-center text-2xl flex-shrink-0">
+        <div className="w-16 h-16 rounded-xl overflow-hidden bg-earth-100 border border-earth-200 flex items-center justify-center text-2xl flex-shrink-0 relative">
           {productImage && !imgError ? (
-            <img 
-              src={productImage} 
-              alt={productName} 
-              className="w-full h-full object-cover" 
-              onError={() => setImgError(true)}
-            />
+            <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+              <img 
+                src={productImage} 
+                alt="" 
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover blur-sm scale-125 opacity-35" 
+              />
+              <img 
+                src={productImage} 
+                alt={productName} 
+                className="relative z-0 w-full h-full object-cover object-center" 
+                onError={() => setImgError(true)}
+              />
+            </div>
           ) : (
             <CategoryAnimatedEmoji
               categoryName={product_details?.category_name || item?.category_name || productName}

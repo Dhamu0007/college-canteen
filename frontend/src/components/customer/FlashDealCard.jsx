@@ -156,12 +156,22 @@ const FlashDealCard = ({ dealProduct, onQuickView }) => {
         <div className="lg:col-span-5 flex items-center justify-center">
           <div className="relative w-full max-w-sm aspect-video sm:aspect-square rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 group bg-slate-950/60">
             {imageUrl && !imgError ? (
-              <img
-                src={imageUrl}
-                alt={dealProduct.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                onError={() => setImgError(true)}
-              />
+              <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                {/* Ambient blur backdrop */}
+                <img
+                  src={imageUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none z-1" />
+                <img
+                  src={imageUrl}
+                  alt={dealProduct.name}
+                  className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  onError={() => setImgError(true)}
+                />
+              </div>
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 flex flex-col items-center justify-center p-6 text-center">
                 <CategoryAnimatedEmoji

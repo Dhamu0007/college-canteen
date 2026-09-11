@@ -78,12 +78,22 @@ const ProductQuickViewModal = ({ product, isOpen, onClose }) => {
             {/* Visual Column */}
             <div className="relative h-64 md:h-full min-h-[280px] bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-amber-600/20 dark:from-slate-800/50 dark:to-slate-900/50 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-slate-200/80 dark:border-slate-800">
               {imageUrl && !imgError ? (
-                <img
-                  src={imageUrl}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                  onError={() => setImgError(true)}
-                />
+                <div className="relative w-full h-full min-h-[280px] overflow-hidden flex items-center justify-center">
+                  {/* Ambient blur backdrop */}
+                  <img
+                    src={imageUrl}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-40 dark:opacity-50 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-black/20 pointer-events-none z-1" />
+                  <img
+                    src={imageUrl}
+                    alt={product.name}
+                    className="relative z-0 w-full h-full object-cover object-center"
+                    onError={() => setImgError(true)}
+                  />
+                </div>
               ) : (
                 <div className="flex flex-col items-center justify-center p-6 text-center">
                   <CategoryAnimatedEmoji
