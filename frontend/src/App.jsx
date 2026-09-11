@@ -7,6 +7,7 @@ import { CartProvider } from './context/CartContext'
 import { OrderProvider } from './context/OrderContext'
 import { NotificationProvider } from './context/NotificationContext'
 import { SoundProvider } from './context/SoundContext'
+import { ThemeProvider } from './context/ThemeContext'
 import ProtectedRoute from './components/common/ProtectedRoute'
 import LoadingScreen from './components/customer/LoadingScreen'
 
@@ -42,12 +43,13 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <SoundProvider>
-          <AuthProvider>
-            <CartProvider>
-              <OrderProvider>
-                <NotificationProvider>
-                <div className="min-h-screen">
+        <ThemeProvider>
+          <SoundProvider>
+            <AuthProvider>
+              <CartProvider>
+                <OrderProvider>
+                  <NotificationProvider>
+                  <div className="min-h-screen">
                   <Toaster 
                     position="top-right"
                     toastOptions={{
@@ -127,6 +129,7 @@ function App() {
                     
                     {/* Customer Routes */}
                     <Route path="/" element={<Home />} />
+                    <Route path="/dashboard" element={<Home />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={
@@ -163,8 +166,9 @@ function App() {
           </CartProvider>
         </AuthProvider>
       </SoundProvider>
-    </Router>
-  </HelmetProvider>
+    </ThemeProvider>
+  </Router>
+</HelmetProvider>
   )
 }
 
