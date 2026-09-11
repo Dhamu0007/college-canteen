@@ -31,7 +31,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
               <img 
                 src={productImage} 
                 alt={productName} 
-                className="relative z-0 w-full h-full object-cover object-center" 
+                className="relative z-10 w-full h-full object-contain p-1" 
                 onError={() => setImgError(true)}
               />
             </div>

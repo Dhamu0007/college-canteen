@@ -41,7 +41,7 @@ const AdminProducts = () => {
   const [editingProduct, setEditingProduct] = useState(null)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
-  const [previewFitMode, setPreviewFitMode] = useState('cover') // 'cover' | 'contain'
+  const [previewFitMode, setPreviewFitMode] = useState('contain') // 'contain' | 'cover'
 
   const [formData, setFormData] = useState({
     name: '',
@@ -103,7 +103,7 @@ const AdminProducts = () => {
     setEditingProduct(null)
     setImageFile(null)
     setImagePreview(null)
-    setPreviewFitMode('cover')
+    setPreviewFitMode('contain')
     setFormData({
       name: '',
       description: '',
@@ -124,7 +124,7 @@ const AdminProducts = () => {
     setEditingProduct(product)
     setImageFile(null)
     setImagePreview(product.image || null)
-    setPreviewFitMode('cover')
+    setPreviewFitMode('contain')
     setFormData({
       name: product.name,
       description: product.description || '',
@@ -500,7 +500,7 @@ const AdminProducts = () => {
                                     <img 
                                       src={prodImg} 
                                       alt={prod.name} 
-                                      className="relative z-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300" 
+                                      className="relative z-10 w-full h-full object-contain p-1 group-hover:scale-110 transition-transform duration-300" 
                                       onError={(e) => {
                                         e.currentTarget.onerror = null
                                         e.currentTarget.style.display = 'none'
@@ -591,25 +591,23 @@ const AdminProducts = () => {
                         key={prod.id} 
                         className="bg-white rounded-3xl border border-earth-200 shadow-sm hover:shadow-xl hover:border-mustard-400 transition-all duration-300 flex flex-col justify-between overflow-hidden group"
                       >
-                        {/* Visual Showcase Container - Perfect Fit System */}
-                        <div className="relative h-48 w-full overflow-hidden bg-earth-100 flex items-center justify-center">
+                        {/* Visual Showcase Container - Full Fit System */}
+                        <div className="relative h-52 w-full overflow-hidden bg-earth-100 flex items-center justify-center">
                           {prodImg ? (
-                            <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                            <div className="relative w-full h-full overflow-hidden flex items-center justify-center bg-earth-50">
                               {/* Ambient Blurred Backdrop Layer */}
                               <img
                                 src={prodImg}
                                 alt=""
                                 aria-hidden="true"
-                                className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 pointer-events-none"
+                                className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-30 pointer-events-none"
                               />
-                              {/* Soft Scrim Gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/35 pointer-events-none z-1" />
                               
-                              {/* Primary Dish Image - Perfectly Fitted & Centered */}
+                              {/* Primary Dish Image - 100% Fully Fitted & Centered */}
                               <img
                                 src={prodImg}
                                 alt={prod.name}
-                                className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                                className="relative z-10 w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-105 transition-transform duration-300 ease-out"
                               />
                             </div>
                           ) : (
@@ -844,16 +842,14 @@ const AdminProducts = () => {
                           aria-hidden="true"
                           className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 pointer-events-none"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/30 pointer-events-none z-1" />
-
                         {/* Foreground Main Photo */}
                         <img 
                           src={imagePreview} 
                           alt="Preview" 
                           className={
-                            previewFitMode === 'contain'
-                              ? 'relative z-0 max-w-full max-h-full object-contain p-2'
-                              : 'relative z-0 w-full h-full object-cover object-center'
+                            previewFitMode === 'cover'
+                              ? 'relative z-10 w-full h-full object-cover object-center'
+                              : 'relative z-10 max-w-full max-h-full object-contain p-2 drop-shadow-sm'
                           }
                         />
 
@@ -903,7 +899,7 @@ const AdminProducts = () => {
                             <img
                               src={imagePreview}
                               alt="Thumbnail"
-                              className="relative z-0 w-full h-full object-cover object-center"
+                              className="relative z-10 w-full h-full object-contain p-1"
                             />
                           </div>
                           <div className="min-w-0 flex-1">

@@ -164,11 +164,10 @@ const FlashDealCard = ({ dealProduct, onQuickView }) => {
                   aria-hidden="true"
                   className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none z-1" />
                 <img
                   src={imageUrl}
                   alt={dealProduct.name}
-                  className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="relative z-10 max-w-full max-h-full w-auto h-auto object-contain p-4 drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
                   onError={() => setImgError(true)}
                 />
               </div>

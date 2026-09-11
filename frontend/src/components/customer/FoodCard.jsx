@@ -112,11 +112,11 @@ const FoodCard = ({ product, featured = false, onQuickView, viewMode = 'grid' })
                   aria-hidden="true"
                   className="absolute inset-0 w-full h-full object-cover blur-md scale-125 opacity-40 pointer-events-none"
                 />
-                {/* Foreground thumbnail */}
+                {/* Foreground thumbnail - Full Fit */}
                 <img
                   src={imageUrl}
                   alt={product.name}
-                  className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  className="relative z-10 w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300"
                   onError={() => setImgError(true)}
                   loading="lazy"
                 />
@@ -203,28 +203,26 @@ const FoodCard = ({ product, featured = false, onQuickView, viewMode = 'grid' })
         }
       `}
     >
-      {/* Image / Visual Showcase Container - Perfect Fit System */}
+      {/* Image / Visual Showcase Container - Full Fit System */}
       <div
-        className="relative overflow-hidden h-48 sm:h-52 cursor-pointer select-none bg-slate-900/5 dark:bg-slate-950/40"
+        className="relative overflow-hidden h-52 sm:h-56 cursor-pointer select-none bg-slate-900/5 dark:bg-slate-950/40 flex items-center justify-center"
         onClick={() => onQuickView?.(product)}
       >
         {imageUrl && !imgError ? (
-          <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden flex items-center justify-center bg-slate-950/5 dark:bg-slate-950/40">
             {/* Ambient Blurred Backdrop Layer - Eliminates harsh letterboxing or edge cuts */}
             <img
               src={imageUrl}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-35 dark:opacity-45 pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-30 dark:opacity-40 pointer-events-none"
             />
-            {/* Cinematic Scrim Gradient to protect contrast and badges */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/35 pointer-events-none z-1" />
             
-            {/* Primary Dish Image - Perfectly Fitted & Centered */}
+            {/* Primary Dish Image - 100% Fully Fitted, Never Cropped */}
             <img
               src={imageUrl}
               alt={product.name}
-              className="relative z-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+              className="relative z-10 w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300 ease-out drop-shadow-md"
               onError={() => setImgError(true)}
               loading="lazy"
             />
